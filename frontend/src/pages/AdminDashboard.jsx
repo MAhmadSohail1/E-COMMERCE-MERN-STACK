@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { PlusCircle, Edit2, Trash2, X, Check, PackagePlus } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
@@ -27,7 +28,7 @@ const AdminDashboard = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/products');
+      const res = await fetch(`${API_BASE_URL}/api/products`);
       const data = await res.json();
       setProducts(data);
       setLoading(false);
@@ -58,7 +59,7 @@ const AdminDashboard = () => {
     setError(null);
 
     try {
-      const res = await fetch('/api/products', {
+      const res = await fetch(`${API_BASE_URL}/api/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -99,7 +100,7 @@ const AdminDashboard = () => {
     }
 
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/products/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${user?.token}`,
@@ -131,7 +132,7 @@ const AdminDashboard = () => {
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`/api/products/${editingProduct._id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/products/${editingProduct._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
